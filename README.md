@@ -165,7 +165,7 @@ $html = $pdf->html();
 
 Send me an issue for improvement or any buggy thing. I love to help and solve another people problems. Thanks :+1:
 
-
+```php
 <?php
 /*
 https://packagist.org/packages/gufy/pdftohtml-php
