@@ -164,3 +164,66 @@ $html = $pdf->html();
 ## Feedback & Contribute
 
 Send me an issue for improvement or any buggy thing. I love to help and solve another people problems. Thanks :+1:
+
+<?php
+/*
+https://packagist.org/packages/gufy/pdftohtml-php
+###Passing options to getDOM By default getDom() extracts all images and creates a html file per page. You can pass options when extracting html:
+
+
+$pdfDom = $pdf->getDom(['ignoreImages' => true]);
+###Available Options
+
+singlePage, default: false
+imageJpeg, default: false
+ignoreImages, default: false
+zoom, default: 1.5
+noFrames, default: true
+*/
+
+// if you are using composer, just use this
+include 'vendor/autoload.php';
+use Gufy\PdfToHtml\Config;
+// change pdftohtml bin location
+Config::set('pdftohtml.bin', 'E:/EasyPHP-Devserver-17/eds-www/poppler-0.67.0/bin/pdftohtml.exe');
+
+// change pdfinfo bin location
+Config::set('pdfinfo.bin', 'E:/EasyPHP-Devserver-17/eds-www/poppler-0.67.0/bin/pdfinfo.exe');
+
+// initiate
+$pdf = new Gufy\PdfToHtml\Pdf('E:\EasyPHP-Devserver-17\eds-www\poppler-0.67.0\olmp.pdf');
+print_r ($pdf);
+
+
+
+// convert to html string
+$html = $pdf->html();
+
+// convert a specific page to html string
+$page = $pdf->html(3);
+//print $page;
+// convert to html and return it as [Dom Object](https://github.com/paquettg/php-html-parser)
+//$dom = $pdf->getDom();
+$dom = $pdf->getDom(['ignoreImages' => true]);
+// check if your pdf has more than one pages
+$total_pages = $pdf->getPages();
+print "
+
+ada :".$total_pages." pages
+
+";
+
+// Your pdf happen to have more than one pages and you want to go another page? Got it. use this command to change the current page to page 3
+$dom->goToPage(2);
+
+// and then you can do as you please with that dom, you can find any element you want
+$paragraphs = $dom->find('body > p');
+var_dump($paragraphs);
+print "
+
+roy : run this file using command:
+E:\EasyPHP-Devserver-17\eds-www\poppler-0.67.0>php -f ./testbasic.php
+
+
+";
+?>
